@@ -9,7 +9,9 @@
     ],
     "scripts": {
         "build": "stencil build",
-        "start": "stencil build --dev --watch --serve",
+        "build:test": "npm run env -- test && npm run build",
+        "env": "node tasks/env.js",
+        "start": "npm run env -- local && stencil build --dev --watch --serve",
         "test": "stencil test --spec --e2e",
         "test.watch": "stencil test --spec --e2e --watch"
     },
@@ -17,6 +19,8 @@
         "@ionic/core": "4.0.0"
     },
     "devDependencies": {
-        "@stencil/core": "0.17.0"
+        "@stencil/core": "0.17.0",
+        "fs-extra": "^7.0.1",
+        "workbox-build": "3.4.1"
     }
 }
