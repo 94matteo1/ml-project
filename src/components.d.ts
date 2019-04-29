@@ -12,15 +12,22 @@ import 'ionicons';
 import {
   AuthService,
 } from './services/Auth';
+import {
+  DatabaseService,
+} from './services/Database';
 
 
 export namespace Components {
 
   interface AppHome {
     'auth': AuthService;
+    'db': DatabaseService;
+    'session': firebase.User;
   }
   interface AppHomeAttributes extends StencilHTMLAttributes {
     'auth'?: AuthService;
+    'db'?: DatabaseService;
+    'session'?: firebase.User;
   }
 
   interface AppProfile {

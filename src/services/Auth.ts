@@ -42,7 +42,7 @@ export class AuthService {
     let firstRun = false;
     this.config = { ...this.config, ...config };
 
-    if (firebase.apps.length === 0) {
+    if (firebase && firebase.apps && firebase.apps.length === 0 && config && config.firebase) {
       firebase.initializeApp(config.firebase);
       firstRun = true;
     }
@@ -155,6 +155,7 @@ export class AuthService {
   }
 
   isLoggedIn() {
+    console.log(firebase.auth().currentUser, this.getFromStorage());
     return firebase.auth().currentUser
       ? firebase.auth().currentUser
       : this.getFromStorage();
@@ -256,7 +257,7 @@ export class AuthService {
 //     );
 //   }
 
-  withSocial(network: string, redirect = false): Promise<firebase.User> {
+  withSocial(network: string, redirect = false): Promise<any> {
     let provider;
     let shouldRedirect = redirect;
     if (window.matchMedia('(display-mode: standalone)').matches) {
@@ -312,8 +313,7 @@ export class AuthService {
               'A social network is required or the one provided is not yet supported.'
           });
         }
-        const authService: any = firebase.auth();
-        authService[shouldRedirect ? 'signInWithRedirect' : 'signInWithPopup'](
+        (firebase.auth() as any)[shouldRedirect ? 'signInWithRedirect' : 'signInWithPopup'](
           provider
         )
           .then(data => {
