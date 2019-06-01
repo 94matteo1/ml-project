@@ -1,6 +1,7 @@
+import Model from './model';
 import { DatabaseService } from "../services/Database";
 
-export class UserModel {
+export class UserModel extends Model {
     protected collectionName = 'users';
     protected db: DatabaseService;
     protected session: firebase.User;
@@ -9,13 +10,11 @@ export class UserModel {
         db: DatabaseService,
         session: firebase.User
     }) {
+        super({
+            db: dependencies.db
+        });
         this.db = dependencies.db;
         this.session = dependencies.session;
-    }
-
-
-    collection() {
-        return this.db.collection(this.collectionName);
     }
 
     getTodos(callback: (snapshot) => void, error: (error) => void) {
@@ -25,7 +24,7 @@ export class UserModel {
     addTodo(data: {
         todo: string;
     }) {
-        return this.db.collection('users').doc(this.session.uid).collection('todos').add(data);
+        return this.collection().doc(this.session.uid).collection('todos').add(data);
     }
 
     toggleTodo(ref: firebase.firestore.DocumentReference, finished: boolean) {
@@ -36,9 +35,5 @@ export class UserModel {
 
     deleteTodo(ref: firebase.firestore.DocumentReference) {
         return ref.delete();
-    }
-
-    update(id: string, data) {
-        return this.db.update(this.collectionName, id, data);
     }
 }
