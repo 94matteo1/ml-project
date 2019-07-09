@@ -1,4 +1,4 @@
-import { Component, Listen, Prop, State } from '@stencil/core';
+import { Component, Listen, Prop, State, h } from '@stencil/core';
 
 import { AuthService } from '../../services/Auth';
 import { DatabaseService } from '../../services/Database';
@@ -90,7 +90,7 @@ export class AppHome {
           <ion-title>Home</ion-title>
         </ion-toolbar>
       </ion-header>,
-      <ion-content padding>
+      <ion-content>
         {this.session ? [
           <h1>Logged in as {this.session.email}</h1>,
           <ion-card>

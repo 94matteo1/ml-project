@@ -1,4 +1,4 @@
-import { Component, State } from '@stencil/core';
+import { Component, State, h } from '@stencil/core';
 
 import { AuthService } from '../../services/Auth';
 import { DatabaseService } from '../../services/Database';
